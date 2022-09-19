@@ -1,8 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-export const postData = createAsyncThunk('/api/data', async (data) => {
-    let res = await axios.post('http://localhost:5000/api/data', data)
-    return res.data;
+import axios from './api';
+// const token='137|jr7WyxqtPU4b3mGmgtcOcntunmImnnSNkMV5V8I5'
+export const postData = createAsyncThunk('/user', async () => {
+    let res = await axios.post('https://api.adstarks.com/public/api/login',JSON.stringify({
+        "identifier":"super_admin@simcc.com",
+        "password": "school_manger2school_manger2"
+    }),
+        {
+            headers:
+        {
+            'Content-type':'application/json',
+            'Accept':'application/json'
+        },
+            withCredentials:false
+        },
+    )
+    return res.data
 })
 // server will send payload 
 export const postSlice = createSlice({
@@ -20,13 +33,13 @@ export const postSlice = createSlice({
             state.loading = true
         },
         [postData.fulfilled]: (state, { payload }) => {
-            console.log(payload, "this is payload")
-            state.data = payload;
+            console.log("sucess",payload.token)
+            // state.data = payload;
             state.loading = false
         },
         [postData.rejected]: (state) => {
             state.error = true
-            console.log("erroe")
+            console.log("faild")
         }
     }
 })

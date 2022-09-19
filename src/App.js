@@ -10,7 +10,7 @@ const App = () => {
   let data2 = useSelector(state => state.Post.data)
   useEffect(() => {
     // dispatch(fetchData())
-    dispatch(postData({ name: "mo", email: "goom" }))
+    dispatch(postData())
   }, [dispatch])
   console.log(data2, "hi")
 
